@@ -43,5 +43,24 @@ nil = Fix NilF
 cons :: a -> List a -> List a
 cons x xs = Fix (ConsF x xs)
 
+natsum :: Nat -> Int
+natsum = cata alg where
+  alg ZeroF     = 0
+  alg (SuccF n) = n + 1
+
+filterL :: (a -> Bool) -> List a -> List a
+filterL p = cata alg where
+  alg NilF = nil
+  alg (ConsF x xs)
+    | p x       = cons x xs
+    | otherwise = xs
+
+nat :: Int -> Nat
+nat = ana coalg where
+  coalg n
+    | n <= 0    = ZeroF
+    | otherwise = SuccF (n - 1)
+
+
 main :: IO ()
 main = someFunc
