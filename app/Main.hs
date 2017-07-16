@@ -61,6 +61,20 @@ nat = ana coalg where
     | n <= 0    = ZeroF
     | otherwise = SuccF (n - 1)
 
+natfac :: Nat -> Int
+natfac = para alg where
+  alg ZeroF = 1
+  alg (SuccF (n,f)) = natsum (succ n) * f
+
+natpred :: Nat -> Nat
+natpred = para alg where
+  alg ZeroF          = zero
+  alg (SuccF (n, _)) = n
+
+tailL :: List a -> List a
+tailL = para alg where
+  alg NilF             = nil
+  alg (ConsF _ (l, _)) = l
 
 main :: IO ()
 main = someFunc
