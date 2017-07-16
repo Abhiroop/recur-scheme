@@ -76,5 +76,16 @@ tailL = para alg where
   alg NilF             = nil
   alg (ConsF _ (l, _)) = l
 
+mergeSort :: Ord a => [a] -> [a]
+mergeSort = hylo alg coalg where
+  alg EmptyF      = []
+  alg (LeafF c)   = [c]
+  alg (NodeF l r) = merge l r
+
+  coalg []  = EmptyF
+  coalg [x] = LeafF x
+  coalg xs  = NodeF l r where
+    (l, r) = splitAt (length xs `div` 2) xs
+
 main :: IO ()
 main = someFunc
